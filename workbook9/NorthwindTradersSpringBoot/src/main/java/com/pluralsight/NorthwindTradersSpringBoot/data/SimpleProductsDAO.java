@@ -32,6 +32,36 @@ public class SimpleProductsDAO implements ProductsDAO{
     }
 
     @Override
+    public List<Products> getByProductId(int productId) {
+        for (Products product : this.products) {
+            if (product.getProductId() == productId) {
+                return products;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Products> getGetByName(String name) {
+        return List.of();
+    }
+
+    @Override
+    public List<Products> getGetGetByCategory(String category) {
+        return List.of();
+    }
+
+    @Override
+    public void delete(int productId) {
+
+    }
+
+    @Override
+    public void update(Products product) {
+
+    }
+
+    @Override
     public List<Products> getByProductId() {
         return List.of();
     }
@@ -44,10 +74,5 @@ public class SimpleProductsDAO implements ProductsDAO{
     @Override
     public List<Products> getGetGetByCategory() {
         return List.of();
-    }
-
-    @Override
-    public void delete() {
-
     }
 }

@@ -48,15 +48,30 @@ public class SimpleProductsDAO implements ProductsDAO {
 
     @Override
     public List<Products> getByProductId(int productId) {
-        for (Products product : this.products) {
-            if (product.getProductId() == productId) {
-                return products;
+//        List<Products> products =new ArrayList<>();
+        String query = "SELECT * FROM Products WHERE productId = ?";
+
+        try {
+            Connection connection = dataSource.getConnection();
+
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+                statement.setInt(1, productId);
+
+                try (ResultSet rows = statement.executeQuery()) {
+                    while (rows.next()) {
+                        this.products.add(new Products(rows.getInt(1), rows.getString(2), rows.getString(3), rows.getInt(4)));
+                    }
+                }
+
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+        return this.products;
     }
 
-    @Override
+        @Override
     public List<Products> getGetByName(String name) {
         return List.of();
     }

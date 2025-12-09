@@ -36,7 +36,7 @@ public class NorthwindTradersCLI implements CommandLineRunner {
                     "3. \tList Customer\n" +
                     "4. \tAdd Customer\n" +
                     "0. Exit");
-            int option = InputValidator.getIntInRange("Enter option: ",1,5);
+            int option = InputValidator.getIntInRange("Enter option: ",1,6);
 
             switch (option) {
                 case 1:
@@ -65,12 +65,15 @@ public class NorthwindTradersCLI implements CommandLineRunner {
                     InputValidator.clearScreen();
                     break;
                 case 3:
-                    listCustomers();
+                   listCustomers();
                     break;
                 case 4:
                     addCustomers();
                     break;
-                case 0:
+                case 5:
+                    getProductById();
+                    break;
+                case 6:
                 default:
                     System.exit(0);
             }
@@ -80,8 +83,8 @@ public class NorthwindTradersCLI implements CommandLineRunner {
     private void listCustomers(){
         ConsoleColors.printHeader("All Customers");
         customerDAO.getAll().forEach(System.out::println);
-        InputValidator.clearScreen();
         InputValidator.pressEnterToContinue();
+        InputValidator.clearScreen();
     }
     private void addCustomers(){
         String customerId = InputValidator.getString("Enter customerId : ");
@@ -99,6 +102,16 @@ public class NorthwindTradersCLI implements CommandLineRunner {
         customerDAO.add(new Customer(customerId, companyName, contactName, contactTitle,
                 address, city, region, postalCode, country, phone, fax));
         ConsoleColors.printSuccess("New Customer Added Successfully");
+        InputValidator.clearScreen();
+    }
+
+    public void getProductById(){
+        InputValidator.clearScreen();
+        ConsoleColors.printHeader("by Product ID");
+
+        int productId = InputValidator.getInt("Enter Product ID to search: ");
+        productDao.getByProductId(productId).forEach(System.out::println);
+        InputValidator.pressEnterToContinue();
         InputValidator.clearScreen();
     }
 }

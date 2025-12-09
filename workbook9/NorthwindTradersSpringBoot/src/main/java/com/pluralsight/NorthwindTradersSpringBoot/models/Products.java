@@ -1,5 +1,8 @@
 package com.pluralsight.NorthwindTradersSpringBoot.models;
 
+import com.pluralsight.NorthwindTradersSpringBoot.util.ConsoleColors;
+import com.pluralsight.NorthwindTradersSpringBoot.util.InputValidator;
+
 public class Products {
     private int productId;
     private String name, category;
@@ -47,7 +50,7 @@ public class Products {
 
     @Override
     public String toString() {
-        return "Products: " +
+        return ConsoleColors.PURPLE +  "Products: " +
                 "\n\tproductId='" + productId + '\'' +
                 "\n\tname='" + name + '\'' +
                 "\n\tcategory='" + category + '\'' +

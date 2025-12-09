@@ -1,22 +1,25 @@
-package com.pluralsight.NorthwindTradersSpringBoot.data;
+package com.pluralsight.NorthwindTradersSpringBoot.dao;
 
+import com.pluralsight.NorthwindTradersSpringBoot.models.Customer;
 import com.pluralsight.NorthwindTradersSpringBoot.models.Products;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class SimpleProductsDAO implements ProductsDAO{
+public class SimpleProductsDAO implements ProductsDAO {
+    private final DataSource dataSource;
     private List<Products> products;
 
-    public SimpleProductsDAO(){
+    public SimpleProductsDAO(DataSource dataSource) {
         this.products = new ArrayList<>();
-        this.products.add(new Products(01,"Steak","meat", 65.79));
-        this.products.add(new Products(02, "Salmon", "seafood", 48.25));
-        this.products.add(new Products(03, "Chicken Breast", "meat", 23.49));
-        this.products.add(new Products(04, "Broccoli", "vegetable", 4.99));
-
+        this.dataSource = dataSource;
     }
 
 
@@ -28,6 +31,18 @@ public class SimpleProductsDAO implements ProductsDAO{
 
     @Override
     public List<Products> getAll() {
+        this.products.clear();
+        String query = "SELECT p.productId, p.ProductName, c.CategoryName, p.UnitPrice FROM Products p JOIN Categories c" +
+                " ON P.CategoryID = C.CategoryID ";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rows = statement.executeQuery();
+            while (rows.next()) {
+                this.products.add(new Products(rows.getInt(1), rows.getString(2), rows.getString(3), rows.getInt(4)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return this.products;
     }
 

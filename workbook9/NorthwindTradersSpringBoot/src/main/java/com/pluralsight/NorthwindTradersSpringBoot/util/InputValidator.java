@@ -17,10 +17,10 @@ public class InputValidator {
                 if (value >= min && value <= max) {
                     return value;
                 } else {
-                    System.out.println("Please enter a number between " + min + " and " + max);
+                    ConsoleColors.printSection("Please enter a number between " + min + " and " + max);
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
+                ConsoleColors.printError("Invalid input. Please enter a valid number.");
             }
         }
     }
@@ -43,6 +43,7 @@ public class InputValidator {
     public static void pressEnterToContinue() {
         System.out.print("\nPress Enter to continue...");
         scanner.nextLine();
+
     }
 
 
@@ -55,10 +56,9 @@ public class InputValidator {
                 System.out.flush();
             }
         } catch (Exception e) {
-            // If clear doesn't work, just print blank lines
-            for (int i = 0; i < 50; i++) {
-                System.out.println();
-            }
+        }
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
         }
     }
 

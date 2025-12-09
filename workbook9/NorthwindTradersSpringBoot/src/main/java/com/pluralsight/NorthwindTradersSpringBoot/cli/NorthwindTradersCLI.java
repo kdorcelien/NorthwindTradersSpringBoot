@@ -36,11 +36,13 @@ public class NorthwindTradersCLI implements CommandLineRunner {
                     "3. \tList Customer\n" +
                     "4. \tAdd Customer\n" +
                     "0. Exit");
-            int option = InputValidator.getIntInRange("Enter option: ",1,4);
+            int option = InputValidator.getIntInRange("Enter option: ",1,5);
 
             switch (option) {
                 case 1:
+                    ConsoleColors.printHeader("All Products");
                     productDao.getAll().forEach(System.out::println);
+                    InputValidator.pressEnterToContinue();
                     InputValidator.clearScreen();
                     break;
                 case 2:
@@ -79,6 +81,7 @@ public class NorthwindTradersCLI implements CommandLineRunner {
         ConsoleColors.printHeader("All Customers");
         customerDAO.getAll().forEach(System.out::println);
         InputValidator.clearScreen();
+        InputValidator.pressEnterToContinue();
     }
     private void addCustomers(){
         String customerId = InputValidator.getString("Enter customerId : ");

@@ -49,6 +49,7 @@ public class SimpleProductsDAO implements ProductsDAO {
     @Override
     public List<Products> getByProductId(int productId) {
 //        List<Products> products =new ArrayList<>();
+        this.products.clear();
         String query = "SELECT * FROM Products WHERE productId = ?";
 
         try {
